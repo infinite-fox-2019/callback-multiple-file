@@ -10,8 +10,29 @@ function sleep(milliseconds) {
 }
 
 function match_data(parent_file, children_file) {
-  // Code here
-}
+  
+  fs.readFile(parent_file, function(err,dataParent){
+  let parent = JSON.parse(dataParent)
+  
+  fs.readFile(children_file,function(err,dataChildren){
+  let children = JSON.parse(dataChildren)
+    
+    for(let i = 0 ; i < parent.length ; i++){
+      parent[i].children = []
+      }
 
+        for(let i = 0 ; i < parent.length ; i++){
+          for(let j = 0 ; j < children.length ; j ++){
+            if(parent[i].last_name === children[j].family){
+              parent[i].children.push(children[j].full_name)
+            }
+          }
+        }
+        sleep(5000)
+        console.log(parent)
+      })
+  })
+}
+  
 match_data('./parents.json', './children.json')
 console.log("Notification : Data sedang diproses !");
