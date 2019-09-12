@@ -14,8 +14,8 @@ function match_data(parent_file, children_file) {
 
   fs.readFile(parent_file, function(err, dataParent){
     fs.readFile(children_file, function(err, dataChild){
-      let parentData = JSON.parse(data)
-      let childData = JSON.parse(data2)
+      let parentData = JSON.parse(dataParent)
+      let childData = JSON.parse(dataChild)
       for(let i=0; i<parentData.length; i++){
         parentData[i].children = []
         for(let j=0; j<childData.length; j++){
