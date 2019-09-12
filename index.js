@@ -11,6 +11,33 @@ function sleep(milliseconds) {
 
 function match_data(parent_file, children_file) {
   // Code here
+
+  fs.readFile(parent_file, function(err, dataParent){
+    fs.readFile(children_file, function(err, dataChild){
+      let parentData = JSON.parse(dataParent)
+      let childData = JSON.parse(dataChild)
+      for(let i=0; i<parentData.length; i++){
+        parentData[i].children = []
+        for(let j=0; j<childData.length; j++){
+          if(parentData[i].last_name === childData[j].family){
+            parentData[i].children.push(childData[j].full_name)
+
+          }
+        }
+        sleep(5000)
+        console.log(parentData[i])
+        sleep(5000)
+      }
+    })
+  })
+
+
+
+  
+
+  // console.log(parentData)
+  // sleep(5000)
+  // console.log(childData)
 }
 
 match_data('./parents.json', './children.json')
