@@ -14,24 +14,24 @@ function match_data(parent_file, children_file) {
     if (parents) {
       const parentsData = JSON.parse(parents)
 
-      fs.readFile(children_file, 'utf8', (err, childrens) => {
-        if (childrens) {
-          const childrensData = JSON.parse(childrens)
-
-          for (let i = 0; i < parentsData.length; i++) {
-            parentsData[i].children = []
-            for (let j = 0; j < childrensData.length; j++) {
-              if (parentsData[i].last_name == childrensData[j].family) {
-                parentsData[i].children.push(childrensData[j].full_name)
+      for (let i = 0; i < parentsData.length; i++) {
+        fs.readFile(children_file, 'utf8', (err, childrens) => {
+          if (childrens) {
+            const childrensData = JSON.parse(childrens)
+              parentsData[i].children = []
+              for (let j = 0; j < childrensData.length; j++) {
+                if (parentsData[i].last_name == childrensData[j].family) {
+                  parentsData[i].children.push(childrensData[j].full_name)
+                }
               }
-            }
+            } else {
+            console.log(`Error: ${err.message}`)
           }
 
           console.log(parentsData)
-        } else {
-          console.log(`Error: ${err.message}`)
-        }
-      })
+          sleep(5000)
+        })
+      }
     } else {
       console.log(`Error: ${err.message}`)
     }
