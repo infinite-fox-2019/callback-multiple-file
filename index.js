@@ -22,8 +22,9 @@ function match_data(parent_file, children_file) {
             parent_file[i].children.push(children_file[j].full_name)
           }
         }
+        console.log(parent_file);
+        sleep(5000)
       }
-      console.log(parent_file);
     })
   })
 }
