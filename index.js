@@ -6,12 +6,35 @@ function sleep(milliseconds) {
     if ((new Date().getTime() - start) > milliseconds) {
       break;
     }
+
   }
 }
-
+function clearScreen () {
+  // Un-comment this line if you have trouble with console.clear();
+  // return process.stdout.write('\033c');
+  console.clear();
+}
 function match_data(parent_file, children_file) {
-  // Code here
+  fs.readFile ( parent_file , 'utf8' , function ( err , parents ) {
+    fs.readFile ( children_file , 'utf8' , function ( err , childrens ) {
+    let parseParents = JSON.parse ( parents );
+    for ( let i=0 ; i<parseParents.length; i++ ) {
+      parseParents[i]['children'] = [];
+    }
+    let parseChildrens = JSON.parse ( childrens );
+    for ( let i=0 ; i<parseParents.length; i++ ) {
+      for ( let j=0; j<parseChildrens.length; j++ ) {
+        if ( parseChildrens[j].family == parseParents[i].last_name ) {
+          parseParents[i]['children'].push( parseChildrens[j].full_name );
+        }
+      }
+    }
+    console.log ( parseParents );
+    })
+  })
 }
 
 match_data('./parents.json', './children.json')
+
+// console.log( test[0].id )
 console.log("Notification : Data sedang diproses !");
